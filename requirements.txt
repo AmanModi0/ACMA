@@ -5,3 +5,4 @@ nltk
 google-genai
 python-dotenv
 scikit-learn
+gunicorn
