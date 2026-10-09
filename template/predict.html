@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Content-Moderation</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="../static/img/cc_white.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../static/styles/style.css" />
+
+  <style>
+    .dropbox {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 60vh;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      color: black;
+      padding: 32px;
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .input-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 750px;
+      background-color: #ffffff;
+      border-radius: 24px;
+      padding-right: 125px;
+      border: 1px solid #cccccc;
+      min-height: 70px;
+    }
+
+    #textInput {
+      flex-grow: 1;
+      border: none;
+      outline: none;
+      padding: 14px 20px;
+      font-size: 1rem;
+      border-radius: 24px;
+      background-color: #ffffff;
+      color: #000000;
+      resize: none;
+      min-height: 48px;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .file-upload-icon {
+      position: absolute;
+      right: 105px;
+      cursor: pointer;
+      color: #777;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .file-upload-icon:hover {
+      color: #000;
+    }
+
+    .analyze-button {
+      position: absolute;
+      right: 8px;
+      padding: 12px 24px;
+      border-radius: 24px;
+      background-color: #000;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .analyze-button:hover {
+      background-color: #222;
+    }
+
+    .analyze-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #loading {
+      margin-top: 20px;
+      color: #000;
+    }
+
+    #result {
+      margin-top: 24px;
+      text-align: left;
+      word-wrap: break-word;
+    }
+
+    .result-card {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 22px;
+      border: 1px solid #e5e5e5;
+    }
+
+    .result-row {
+      margin-bottom: 10px;
+    }
+
+    .toxic {
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    .non-toxic {
+      color: #16a34a;
+      font-weight: 700;
+    }
+
+    .neutral {
+      color: #444;
+      font-weight: 700;
+    }
+
+    .image-preview {
+      max-width: 300px;
+      max-height: 250px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 20px auto;
+      display: none;
+    }
+
+    .file-name {
+      font-size: 13px;
+      color: #666;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .clear-file {
+      display: none;
+      margin-top: 8px;
+      font-size: 13px;
+      color: #dc2626;
+      cursor: pointer;
+    }
+
+    .clear-file:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-black min-h-screen m-0 p-0 overflow-x-hidden font-sans">
+
+<header class="bg-black body-font">
+  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+
+    <a
+      class="flex title-font font-medium items-center text-white mb-4 md:mb-0"
+      href="./predict.html"
+    >
+      <img
+        class="h-8 mr-2 logo"
+        src="../static/img/cc_white.png"
+        alt=""
+      />
+
+      <span class="ml-3 text-xl">
+        AI Content Moderation Analysis (ACMA) — Aman
+      </span>
+    </a>
+
+    <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+      <a
+        class="mr-5 text-gray-400 hover:text-white transition duration-300"
+        href="./index.html"
+      >
+        Home
+      </a>
+
+      <a
+        class="mr-5 text-gray-400 hover:text-white transition duration-300"
+        href="./aboutus.html"
+      >
+        About Us
+      </a>
+    </nav>
+
+  </div>
+</header>
+
+<div class="container mx-auto p-10">
+
+  <div class="dropbox">
+
+    <div class="card">
+
+      <h2 class="text-3xl font-bold text-black mb-6">
+        Content Moderation Tool
+      </h2>
+
+      <p class="text-black mb-6">
+        Analyze text for toxicity and inappropriate content.
+      </p>
+
+      <div class="input-container">
+
+        <textarea
+          id="textInput"
+          placeholder="Write or paste your text here..."
+        ></textarea>
+
+
+        <button
+          id="analyzeButton"
+          class="analyze-button"
+          onclick="analyzeContent()"
+        >
+          Analyze
+        </button>
+
+      </div>
+
+      <div
+        id="loading"
+        class="hidden"
+      >
+        Analyzing...
+      </div>
+
+      <div id="result"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<script>
+
+const textInput = document.getElementById("textInput");
+const fileInput = document.getElementById("fileInput");
+const analyzeButton = document.getElementById("analyzeButton");
+const loadingDiv = document.getElementById("loading");
+const resultDiv = document.getElementById("result");
+
+async function analyzeContent() {
+
+  const text = textInput.value.trim();
+
+  if (!text) {
+
+    resultDiv.innerHTML = `
+      <div class="result-card">
+        <p class="text-red-600 font-semibold">
+          Please enter text to analyze.
+        </p>
+      </div>
+    `;
+
+    return;
+  }
+
+  analyzeButton.disabled = true;
+  analyzeButton.textContent = "Analyzing...";
+  loadingDiv.classList.remove("hidden");
+  resultDiv.innerHTML = "";
+
+  const formData = new FormData();
+  formData.append("text", text);
+
+  try {
+
+    const response = await fetch("/detect_toxicity", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Request failed.");
+    }
+
+    displayResult(data);
+
+  } catch (error) {
+
+    resultDiv.innerHTML = `
+      <div class="result-card">
+        <p class="text-red-600 font-semibold">
+          Error: ${escapeHtml(error.message)}
+        </p>
+      </div>
+    `;
+
+  } finally {
+
+    loadingDiv.classList.add("hidden");
+    analyzeButton.disabled = false;
+    analyzeButton.textContent = "Analyze";
+
+  }
+}
+
+function displayResult(data) {
+
+
+
+  const decisionClass =
+    data.toxicity_result === "Toxic"
+      ? "toxic"
+      : "non-toxic";
+
+  resultDiv.innerHTML = `
+    <div class="result-card">
+
+      <div class="result-row">
+        <strong>Text:</strong>
+        ${escapeHtml(data.text)}
+      </div>
+
+      <div class="result-row">
+        <strong>Final Decision:</strong>
+        <span class="${decisionClass}">
+          ${escapeHtml(data.toxicity_result)}
+        </span>
+      </div>
+
+      <div class="result-row">
+        <strong>ML Prediction:</strong>
+        ${escapeHtml(data.ml_prediction)}
+      </div>
+
+      <div class="result-row">
+        <strong>ML Confidence:</strong>
+        ${(Number(data.ml_confidence) * 100).toFixed(2)}%
+      </div>
+
+      <div class="result-row">
+        <strong>Sentiment:</strong>
+        ${escapeHtml(data.sentiment)}
+      </div>
+
+      <div class="result-row">
+        <strong>Category:</strong>
+        ${escapeHtml(data.category)}
+      </div>
+
+      <div class="result-row">
+        <strong>Gemini Confidence:</strong>
+        ${(Number(data.gemini_confidence) * 100).toFixed(2)}%
+      </div>
+
+      <div class="result-row">
+        <strong>Explanation:</strong>
+        ${escapeHtml(data.explanation)}
+      </div>
+
+      <div class="result-row">
+        <strong>AI Status:</strong>
+        ${data.gemini_available ? "Gemini Analysis" : "Gemini Unavailable"}
+      </div>
+
+    </div>
+  `;
+}
+
+function escapeHtml(value) {
+
+  const div = document.createElement("div");
+
+  div.textContent = value ?? "";
+
+  return div.innerHTML;
+}
+
+textInput.addEventListener("keydown", function(event) {
+
+  if (
+    event.key === "Enter" &&
+    !event.shiftKey
+  ) {
+
+    event.preventDefault();
+    analyzeContent();
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>

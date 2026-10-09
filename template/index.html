@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Content Moderation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <link rel="shortcut icon" href="../static/img/cc_white.png" type="image/x-icon" />
+    <style>
+        /* Custom styles for black & white theme */
+        body {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .btn-use-now {
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #000000;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .btn-use-now:hover {
+            background-color: #333333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .btn-use-now:active {
+            transform: scale(0.95);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        header a {
+            color: #ffffff;
+        }
+        header a:hover {
+            color: #cccccc;
+        }
+        nav a {
+            transition: color 0.3s ease;
+        }
+        section h1, section h2, section h3 {
+            color: #000000;
+        }
+        section p {
+            color: #222222;
+        }
+        .bg-green-100 {
+            background-color: #f0f0f0 !important;
+        }
+        .text-green-500 {
+            color: #000000 !important;
+        }
+        .bg-white {
+            background-color: #ffffff !important;
+        }
+        .text-gray-700, .text-gray-600 {
+            color: #000000 !important;
+        }
+        .bg-gray-200 {
+            background-color: #000000 !important;
+        }
+        footer {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        footer a {
+            color: #ffffff;
+        }
+        footer a:hover {
+            color: #cccccc;
+        }
+        .shadow-md {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .rounded-lg {
+            border-radius: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="bg-black fixed w-full top-0 left-0 z-50 py-5 flex flex-wrap items-center justify-between px-5">
+        <a class="flex items-center text-xl font-medium text-white" href="./index.html">
+            <img class="h-8 mr-2" src="../static/img/cc_white.png" alt="Logo" />
+            AI Content Moderation Analysis (ACMA)
+        </a>
+        <nav class="md:ml-auto flex items-center space-x-5 text-white">
+            <!-- <a class="hover:text-gray-400" href="./index.html">Home</a> -->
+            <a class="text-gray-400 hover:text-white" href="./aboutus.html">About Us</a>
+            <a class="text-gray-400 hover:text-white" href="./predict.html">Classify</a>
+        </nav>
+    </header>
+
+    <!-- Home page main image Section -->
+    <section class="container mx-auto px-5 py-24 flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0">
+            <h1 class="text-2xl font-medium mb-4">If <i>Ethical & Safe Environment</i> is your priority !</h1>
+            <h1 class="text-4xl font-medium mb-4">Choose our advanced </br>AI Content Moderation Analysis (ACMA)</h1>
+            <p class="leading-relaxed mb-8">Online moderation systems enforce community rules, legal compliance, and ethical standards while respecting privacy and freedom of expression.</p>
+            <a href="predict.html" class="btn-use-now">Use Now</a>
+        </div>
+        <div class="md:w-1/2">
+            <img class="w-full rounded-lg" src="../static/img/content_flag.jpg" alt="Hero Image" />
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="container mx-auto px-5 py-20">
+        <h2 class="text-3xl font-medium mb-12 text-center">Why Use Content Moderation System?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div class="flex flex-col items-center">
+                <div class="w-20 h-20 flex items-center justify-center rounded-full bg-green-100 mb-5">
+                    <svg class="w-10 h-10 text-green-500" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium mb-3">Upholding Community Guidelines</h3>
+                <p class="text-gray-700 text-center">Enforce platform-specific rules for a respectful online environment.</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-20 h-20 flex items-center justify-center rounded-full bg-green-100 mb-5">
+                    <svg class="w-10 h-10 text-green-500" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium mb-3">Maintain Safety</h3>
+                <p class="text-gray-700 text-center">Ensure a secure online environment by monitoring and controlling content.</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-20 h-20 flex items-center justify-center rounded-full bg-green-100 mb-5">
+                    <svg class="w-10 h-10 text-green-500" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium mb-3">Ethical Standards</h3>
+                <p class="text-gray-700 text-center">Adhere to principles of fairness, impartiality, and privacy in content moderation.</p>
+            </div>
+        </div>
+    </section>
+
+
+</body>
+</html>

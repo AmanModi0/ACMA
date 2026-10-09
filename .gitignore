@@ -1,0 +1,11 @@
+Tfidf_vectorizer.pkl
+toxicity_classifier.pkl
+toxicity_model.pkt
+VIOLENCE_DETECTION.h5
+.venv/
+venv/
+.env
+__pycache__/
+*.pyc
+md/
+IMG_MODEL.299x299.h5
