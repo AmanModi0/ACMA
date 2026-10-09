@@ -1,5 +1,3 @@
-Tfidf_vectorizer.pkl
-toxicity_classifier.pkl
 toxicity_model.pkt
 VIOLENCE_DETECTION.h5
 .venv/
