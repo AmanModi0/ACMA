@@ -1,13 +1,7 @@
 flask
-tensorflow
-keras
-easyocr
-opencv-python
-speechrecognition
 joblib
 numpy
 nltk
 google-genai
 python-dotenv
-moviepy
 scikit-learn
