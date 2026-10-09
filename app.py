@@ -25,7 +25,6 @@ gemini_client = genai.Client(api_key=gemini_api_key) if gemini_api_key else None
 
 import nltk
 import os
-# Vercel functions only have write access to /tmp
 nltk_data_dir = '/tmp/nltk_data'
 os.makedirs(nltk_data_dir, exist_ok=True)
 nltk.data.path.append(nltk_data_dir)
